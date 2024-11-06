@@ -14,5 +14,5 @@ Color Player::get_color() {
 }
 
 std::string Player::get_name() {
-
+	return name;
 }
