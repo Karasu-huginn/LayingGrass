@@ -1,11 +1,11 @@
 #include "Color.h"
 
 Color::Color() {
-	color = "white";
+	color = 0;
 	init_indexes();
 }
 
-Color::Color(std::string c) {
+Color::Color(int c) {
 	color = c;
 	init_indexes();
 }
@@ -15,12 +15,13 @@ std::string Color::colorize_text(std::string text) {
 }
 
 void Color::init_indexes() {
-	indexes["black"] = "30";
-	indexes["red"] = "31";
-	indexes["green"] = "32";
-	indexes["yellow"] = "33";
-	indexes["blue"] = "34";
-	indexes["magenta"] = "35";
-	indexes["cyan"] = "36";
-	indexes["white"] = "37";
+	indexes[0] = "91";
+	indexes[1] = "92";
+	indexes[2] = "93";
+	indexes[3] = "94";
+	indexes[4] = "95";
+	indexes[5] = "96";
+	indexes[6] = "31";
+	indexes[7] = "32";
+	indexes[8] = "33";
 }

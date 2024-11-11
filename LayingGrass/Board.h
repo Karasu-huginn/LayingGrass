@@ -15,5 +15,5 @@ public:
 	char bonus_check();
 
 private:
-	std::vector<char> board;
+	std::vector<std::vector<char>> board;
 };

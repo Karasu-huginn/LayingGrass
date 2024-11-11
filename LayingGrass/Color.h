@@ -5,11 +5,11 @@
 class Color {
 public:
 	Color();
-	Color(std::string c);
+	Color(int c);
 	std::string colorize_text(std::string text);
 	void init_indexes();
 private:
-	std::string color;
-	std::map<std::string, std::string> indexes;
+	int color;
+	std::map<int, std::string> indexes;
 };
 

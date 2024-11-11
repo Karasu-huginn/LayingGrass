@@ -3,9 +3,9 @@
 
 class Player {
 public:
-	Player();
+	Player(std::string n, int c);
 	~Player();
-	Color get_color();
+	std::string colorize(std::string text);
 	std::string get_name();
 private:
 	Color color;
