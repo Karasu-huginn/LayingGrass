@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 class Board {
 public:
 	Board();
 	Board(int pn);
 	~Board();
+	void init_bonuses();
 	void display_board();
 	void check_victory();
 	void place_tile();
@@ -16,4 +18,5 @@ public:
 
 private:
 	std::vector<std::vector<char>> board;
+	int board_size;
 };

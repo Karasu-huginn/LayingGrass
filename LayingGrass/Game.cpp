@@ -32,7 +32,6 @@ void Game::init_players() {
 
 void Game::init_tiles_queue() {
 	std::cout << "Initializing Tiles queue..." << std::endl;
-	std::vector<Tile> temp_vector;
 	std::ifstream file("Tileslist.json");
 	nlohmann::json data = nlohmann::json::parse(file);
 	tiles_queue_randomize(data);
