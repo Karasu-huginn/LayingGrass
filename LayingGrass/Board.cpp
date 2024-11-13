@@ -53,9 +53,11 @@ void Board::set_bonuses(int bonus_num, char bonus_char) {
 }
 
 void Board::display_board() {
+	char letter = 'A';
 	std::cout << " \t";
 	for (int i = 0; i < board_size; i++) {
-		std::cout << "A ";
+		std::cout << letter << " ";
+		letter++;
 	}
 	std::cout << "\n" << std::endl;
 	for (int x = 0; x < board_size; x++) {
