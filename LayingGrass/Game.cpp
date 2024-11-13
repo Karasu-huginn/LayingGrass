@@ -8,11 +8,11 @@ Game::Game(int pn) {
 	board = Board(pn);
 	player_turn = pn * 9;
 
-	for (int i = 0; i < 96; i++) {
-		Tile current_tile = tiles_queue.front();
-		current_tile.display();
-		tiles_queue.pop();
-	}
+	// for (int i = 0; i < 96; i++) {
+	// 	Tile current_tile = tiles_queue.front();
+	// 	current_tile.display();
+	// 	tiles_queue.pop();
+	// }
 }
 
 Game::~Game() {
@@ -34,6 +34,7 @@ void Game::init_tiles_queue() {
 	std::cout << "Initializing Tiles queue..." << std::endl;
 	std::ifstream file("Tileslist.json");
 	nlohmann::json data = nlohmann::json::parse(file);
+	std::cout << "Randomazing queue..." << std::endl;
 	tiles_queue_randomize(data);
 	std::cout << "Tiles queue initialized !" << std::endl;
 }
@@ -71,5 +72,23 @@ bool Game::queue_has_number(int number, int rand_tile_ind[96]) {
 	return false;
 }
 
-void Game::game_start() {
+
+void Game::display_current_next_tiles_queued(std::queue<Tile> tiles_queue) {
+    for (int i = 0; i < 6 ; i++) {
+		if (i == 0) {
+			std::cout << "Current tile : " << std::endl;
+            tiles_queue.front().display();
+			std::cout << "\n Next tiles :" << std::endl;
+		} else {
+			std::cout << "Tile " << i << " : " << std::endl; 
+			tiles_queue.front().display();
+		}
+        tiles_queue.pop();
+    }
 }
+
+void Game::game_start() {
+	display_current_next_tiles_queued(tiles_queue);
+
+}
+

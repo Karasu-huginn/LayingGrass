@@ -37,3 +37,15 @@ void Tile::display() {
 	}
 	std::cout << "\n" << std::endl;
 }
+
+
+
+void Tile::display_row(int row) {
+	for (int y = 0; y < 6; y++) {
+        if (shape[row][y]) {
+            std::cout << "O";
+        } else {
+            std::cout << " ";
+        }
+    }
+}
