@@ -3,6 +3,7 @@
 Game::Game(int pn) {
 	std::cout << "Initializing Game..." << std::endl;
 	players_number = pn;
+	tiles_number = ceil(pn * 10.67);
 	init_players();
 	init_tiles_queue();
 	board = Board(pn);
@@ -43,7 +44,7 @@ void Game::tiles_queue_randomize(nlohmann::json data) {
 	int random_tile_indexes[96];
 	int ite;
 	generate_rand_ind(random_tile_indexes);
-	for (int i = 0; i < 96; i++) {
+	for (int i = 0; i < tiles_number; i++) {
 		ite = random_tile_indexes[i];
 		tiles_queue.push(Tile(data[ite]));
 	}

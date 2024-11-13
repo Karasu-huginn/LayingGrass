@@ -21,6 +21,7 @@ public:
 	bool queue_has_number(int number, int rand_tile_ind[96]);
 	void display_current_next_tiles_queued(std::queue<Tile> queue);
 private:
+	int tiles_number;
 	int players_number;
 	std::queue<Tile> tiles_queue;
 	Board board;
