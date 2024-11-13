@@ -10,7 +10,11 @@ public:
 	Tile(nlohmann::json d);
 	~Tile();
 	void display();
-	void display_row(int row);
+	void deep_copy(bool(&tmp_sh)[6][6]);
+	void deep_paste(bool(tmp_sh)[6][6]);
+	void flip_h();
+	void flip_v();
+	void rotate();
 private:
 	bool shape[6][6];
 };

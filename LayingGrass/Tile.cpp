@@ -1,7 +1,6 @@
 ﻿#include "Tile.h"
 
 Tile::Tile() {
-
 	for (int x = 0; x < 6; x++) {
 		for (int y = 0; y < 6; y++) {
 			shape[x][y] = 0;
@@ -27,10 +26,10 @@ void Tile::display() {
 	for (int x = 0; x < 6; x++) {
 		for (int y = 0; y < 6; y++) {
 			if (shape[x][y]) {
-				std::cout << "O";
+				std::cout << "O ";
 			}
 			else {
-				std::cout << " ";
+				std::cout << "  ";
 			}
 		}
 		std::cout << std::endl;
@@ -38,14 +37,51 @@ void Tile::display() {
 	std::cout << "\n" << std::endl;
 }
 
+void Tile::deep_copy(bool(&tmp_sh)[6][6]) {
+	for (int x = 0; x < 6; x++) {
+		for (int y = 0; y < 6; y++) {
+			tmp_sh[x][y] = shape[x][y];
+		}
+	}
+}
 
+void Tile::deep_paste(bool (tmp_sh)[6][6]) {
+	for (int x = 0; x < 6; x++) {
+		for (int y = 0; y < 6; y++) {
+			shape[x][y] = tmp_sh[x][y];
+		}
+	}
+}
 
-void Tile::display_row(int row) {
-	for (int y = 0; y < 6; y++) {
-        if (shape[row][y]) {
-            std::cout << "O";
-        } else {
-            std::cout << " ";
-        }
-    }
+void Tile::flip_h() {
+	bool temp_shape[6][6];
+	deep_copy(temp_shape);
+	for (int x = 0; x < 6; x++) {
+		for (int y = 0; y < 6; y++) {
+			temp_shape[x][y] = shape[5-x][y];
+		}
+	}
+	deep_paste(temp_shape);
+}
+
+void Tile::flip_v() {
+	bool temp_shape[6][6];
+	deep_copy(temp_shape);
+	for (int x = 0; x < 6; x++) {
+		for (int y = 0; y < 6; y++) {
+			temp_shape[x][y] = shape[x][5-y];
+		}
+	}
+	deep_paste(temp_shape);
+}
+
+void Tile::rotate() {
+	bool temp_shape[6][6];
+	deep_copy(temp_shape);
+	for (int x = 0; x < 6; x++) {
+		for (int y = 0; y < 6; y++) {
+			temp_shape[x][y] = shape[y][5 - x];
+		}
+	}
+	deep_paste(temp_shape);
 }
