@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <random>
 
 class Board {
 public:
@@ -8,6 +10,7 @@ public:
 	Board(int pn);
 	~Board();
 	void init_bonuses();
+	void set_bonuses(int bonus_num, char bonus_char);
 	void display_board();
 	void check_victory();
 	void place_tile();
@@ -19,4 +22,5 @@ public:
 private:
 	std::vector<std::vector<char>> board;
 	int board_size;
+	int player_number;
 };
