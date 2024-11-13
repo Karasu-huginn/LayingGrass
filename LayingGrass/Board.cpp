@@ -56,7 +56,12 @@ void Board::display_board() {
 	char letter = 'A';
 	std::cout << " \t";
 	for (int i = 0; i < board_size; i++) {
-		std::cout << letter << " ";
+		if (letter > 'Z') {
+			std::cout << char(letter+6) << " ";
+		}
+		else {
+			std::cout << letter << " ";
+		}
 		letter++;
 	}
 	std::cout << "\n" << std::endl;
