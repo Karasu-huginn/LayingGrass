@@ -7,6 +7,7 @@ public:
 	Color();
 	Color(int c);
 	std::string colorize_text(std::string text);
+	void color_set(char c);
 	void init_indexes();
 private:
 	int color;

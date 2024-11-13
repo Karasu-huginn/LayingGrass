@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include "Color.h"
 
 class Board {
 public:
@@ -21,6 +22,7 @@ public:
 
 private:
 	std::vector<std::vector<char>> board;
+	Color color;
 	int board_size;
 	int player_number;
 };

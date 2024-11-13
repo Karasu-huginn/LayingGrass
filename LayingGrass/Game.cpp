@@ -8,11 +8,11 @@ Game::Game(int pn) {
 	board = Board(pn);
 	player_turn = pn * 9;
 
-	for (int i = 0; i < 96; i++) {
+	/*for (int i = 0; i < 96; i++) {
 		Tile current_tile = tiles_queue.front();
 		current_tile.display();
 		tiles_queue.pop();
-	}
+	}*/
 }
 
 Game::~Game() {
@@ -25,7 +25,7 @@ void Game::init_players() {
 	for (int i = 0; i < players_number; i++) {
 		std::cout << "Enter the name of the player " << i << " : " << std::endl;
 		std::cin >> name;
-		players.push_back(Player(name, i));
+		players.push_back(Player(name));
 	}
 	std::cout << "Players initialized !" << std::endl;
 }

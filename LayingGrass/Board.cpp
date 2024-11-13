@@ -1,11 +1,11 @@
 #include "Board.h"
 
 Board::Board() {
-
 }
 
 Board::Board(int pn) {
 	player_number = pn;
+	color = Color(0);
 	if (player_number < 5) {
 		board_size = 20;
 	}
@@ -63,7 +63,16 @@ void Board::display_board() {
 	for (int x = 0; x < board_size; x++) {
 		std::cout << x << "\t";
 		for (int y = 0; y < board_size; y++) {
-			std::cout << board[x][y] << " ";
+			if (board[x][y] == '0') {
+				std::cout << '.' << " ";
+			}
+			else if (board[x][y] >= '1' && board[x][y] <= '9') {
+				color.color_set(board[x][y]);
+				std::cout << color.colorize_text("O ");
+			}
+			else {
+				std::cout << board[x][y] << " ";
+			}
 		}
 		std::cout << std::endl;
 	}
