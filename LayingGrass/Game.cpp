@@ -26,7 +26,7 @@ void Game::init_players() {
 	for (int i = 0; i < players_number; i++) {
 		std::cout << "Enter the name of the player " << i << " : " << std::endl;
 		std::cin >> name;
-		players.push_back(Player(name));
+		players.push_back(Player(name, char(i)));
 	}
 	std::cout << "Players initialized !" << std::endl;
 }
@@ -117,10 +117,9 @@ int Game::display_turn_actions() {
 
 
 void Game::game_start() {
-	display_current_next_tiles_queued(tiles_queue);
-	display_turn_actions();
 	//display_current_next_tiles_queued(tiles_queue);
-	place_stone();
+	//display_turn_actions();
+	bases_placement();
 	board.display_board();
 
 }
@@ -150,4 +149,22 @@ void Game::place_stone() {
 	std::cin >> user_x;
 	interpret_coords(user_x, user_y);
 	} while (!board.place_stone(int(user_x), int(user_y)));
+}
+
+void Game::bases_placement() {
+	for (int i = 0; i < players_number; i++) {
+		place_base(players[i].get_char());
+	}
+}
+
+void Game::place_base(char player) {
+	char user_x;
+	char user_y;
+	do {
+		std::cout << "Please enter the coordinates of the square you'd like to place your base on.\nx : ";
+		std::cin >> user_y;
+		std::cout << "y : ";
+		std::cin >> user_x;
+		interpret_coords(user_x, user_y);
+	} while (!board.place_base(player ,int(user_x), int(user_y)));
 }

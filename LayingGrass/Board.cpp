@@ -32,9 +32,9 @@ void Board::init_bonuses() {
 	int exchange_num = ceil(player_number * 1.5);
 	int stone_num = ceil(player_number * 0.5);
 	int rob_num = player_number;
-	set_bonuses(exchange_num, 'E');
-	set_bonuses(stone_num, 'S');
-	set_bonuses(rob_num, 'R');
+	set_bonuses(exchange_num, '1');
+	set_bonuses(stone_num, '2');
+	set_bonuses(rob_num, '3');
 }
 
 void Board::set_bonuses(int bonus_num, char bonus_char) {
@@ -70,8 +70,21 @@ void Board::display_board_char(int x, int y) {
 	if (board[x][y] == '0') {
 		std::cout << '.' << " ";
 	}
-	else if ('1' <= board[x][y] and board[x][y] <= '9') {
-		color.color_set(board[x][y]);
+	else if (board[x][y] == '1') {
+		std::cout << "E ";
+	}
+	else if (board[x][y] == '2') {
+		std::cout << "S ";
+	}
+	else if (board[x][y] == '3') {
+		std::cout << "R ";
+	}
+	else if ('A' <= board[x][y] and board[x][y] <= 'Z') {
+		color.color_set(int(board[x][y]) - 'A');
+		std::cout << color.colorize_text("0 ");
+	}
+	else if ('a' <= board[x][y] and board[x][y] <= 'z') {
+		color.color_set(int(board[x][y] - 'a'));
 		std::cout << color.colorize_text("O ");
 	}
 	else {
@@ -102,6 +115,16 @@ void Board::check_victory() {
 
 }
 
+bool Board::place_base(char player, int x, int y) {
+	if (board[x][y] == '0') {
+		board[x][y] = char(player-32);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void Board::place_tile() {
 
 }
@@ -114,6 +137,7 @@ bool Board::place_stone(int x, int y) {
 	std::cout << "x = " << x << " | y = " << y << std::endl;
 	if (board[x][y] == '0') {
 		board[x][y] = '$';
+		return true;
 	}
 	else {
 		return false;
@@ -121,31 +145,7 @@ bool Board::place_stone(int x, int y) {
 }
 
 bool Board::check_neighborhood(int ox, int oy, char goal) {
-	for (int nx = -1; nx < 2; nx++) {
-		for (int ny = -1; ny < 2; ny++) {
-			// unwanted cases skip
-			if (nx == 0 and ny == 0) {
-				continue;
-			}
-			if (ox + nx < 0) {
-				continue;
-			}
-			if (ox + nx >= board_size) {
-				continue;
-			}
-			if (oy + ny < 0) {
-				continue;
-			}
-			if (oy + ny >= board_size) {
-				continue;
-			}
-
-			// wanted cases check
-			if (board[ox + nx][oy + ny] == goal) {
-				return true;
-			}
-		}
-	}
+	return false;
 }
 
 

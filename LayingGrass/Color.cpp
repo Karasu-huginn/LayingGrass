@@ -10,8 +10,8 @@ Color::Color(int c) {
 	init_indexes();
 }
 
-void Color::color_set(char c) {
-	color = c - '1';
+void Color::color_set(int c) {
+	color = c;
 }
 
 std::string Color::colorize_text(std::string text) {

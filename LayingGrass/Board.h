@@ -16,6 +16,7 @@ public:
 	void display_board_char(int x, int y);
 	void display_board();
 	void check_victory();
+	bool place_base(char player, int x, int y);
 	void place_tile();
 	void rob_tile();
 	bool place_stone(int x, int y);
