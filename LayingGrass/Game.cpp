@@ -117,14 +117,11 @@ int Game::display_turn_actions() {
 
 
 void Game::game_start() {
-<<<<<<< HEAD
 	display_current_next_tiles_queued(tiles_queue);
 	display_turn_actions();
-=======
 	//display_current_next_tiles_queued(tiles_queue);
 	place_stone();
 	board.display_board();
->>>>>>> b43c545fc12c237d6872d641c7da845953ac6f54
 
 }
 
