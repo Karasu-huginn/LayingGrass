@@ -26,7 +26,7 @@ void Tile::display() {
 	for (int x = 0; x < 6; x++) {
 		for (int y = 0; y < 6; y++) {
 			if (shape[x][y]) {
-				std::cout << "O ";
+				std::cout << "0";
 			}
 			else {
 				std::cout << "  ";

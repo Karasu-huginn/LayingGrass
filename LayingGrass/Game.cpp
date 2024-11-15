@@ -88,8 +88,37 @@ void Game::display_current_next_tiles_queued(std::queue<Tile> tiles_queue) {
     }
 }
 
+int Game::display_turn_actions() {
+	int choice;
+	std::cout << "1- Exchange tile" << std::endl;
+    std::cout << "2- Place tile" << std::endl;
+    std::cout << "3- Rotate tile" << std::endl;
+    std::cout << "4- Flip tile (horizontaly)" << std::endl;
+    std::cout << "5- Flip tile (verticaly)" << std::endl;
+	while (true) {
+    	std::cout << "Choose your action (1, 2, 3, 4, 5): ";
+		std::cin >> choice;
+		if (choice >= 1 && choice <= 5) {
+			break;
+		} else {
+			std::cout << "Invalid input!" << std::endl;
+			std::cin.clear();
+			std::cin.ignore();
+		}
+	}
+	return choice;
+}
+
+
+
+
+
+
+
+
 void Game::game_start() {
 	display_current_next_tiles_queued(tiles_queue);
+	display_turn_actions();
 
 }
 
