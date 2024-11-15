@@ -20,6 +20,8 @@ public:
 	void generate_rand_ind(int(&rand_tile_ind)[96]);
 	bool queue_has_number(int number, int rand_tile_ind[96]);
 	void display_current_next_tiles_queued(std::queue<Tile> queue);
+	void interpret_coords(char& x, char& y);
+	void place_stone();
 private:
 	int tiles_number;
 	int players_number;

@@ -8,4 +8,5 @@ public:
 	std::string get_name();
 private:
 	std::string name;
+	int exchange_number;
 };

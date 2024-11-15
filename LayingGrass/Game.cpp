@@ -89,7 +89,35 @@ void Game::display_current_next_tiles_queued(std::queue<Tile> tiles_queue) {
 }
 
 void Game::game_start() {
-	display_current_next_tiles_queued(tiles_queue);
+	//display_current_next_tiles_queued(tiles_queue);
+	place_stone();
+	board.display_board();
 
 }
 
+void Game::interpret_coords(char &x, char &y) {
+	if (x > 'Z') {
+		x -= 'G';
+	}
+	else {
+		x -= 'A';
+	}
+	if (y > 'Z') {
+		y -= 'G';
+	}
+	else {
+		y -= 'A';
+	}
+}
+
+void Game::place_stone() {
+	char user_x;
+	char user_y;
+	do {
+	std::cout << "Please enter the coordinates of the square you'd like to place your stone on.\nx : ";
+	std::cin >> user_y;
+	std::cout << "y : ";
+	std::cin >> user_x;
+	interpret_coords(user_x, user_y);
+	} while (!board.place_stone(int(user_x), int(user_y)));
+}
