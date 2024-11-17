@@ -26,7 +26,7 @@ public:
 	void bases_placement();
 	void place_base(char player);
 	void clear_terminal();
-	void make_action(int action);
+	bool make_action(int action);
 private:
 	int tiles_number;
 	int players_number;

@@ -119,6 +119,7 @@ void Game::clear_terminal() {
 
 void Game::game_start() {
     int action_choice;
+	bool end_turn;
 
     while (player_turn > 0) { 
         for (int i = 0; i < players_number; i++) {
@@ -136,11 +137,11 @@ void Game::game_start() {
 				if (action_choice == 6) {
                     break;
                 }
-				make_action(action_choice);
+				end_turn = make_action(action_choice);
+				if (end_turn) {
+                    break;
+                }
 			}
-
-
-
 			std::cout << "ending turn..." << std::endl;
 			Sleep(3000);
             player_turn--;
@@ -154,17 +155,22 @@ void Game::game_start() {
 }
 
 
-void Game::make_action(int action) {
+bool Game::make_action(int action) {
 	if (action == 1) {
-		std::cout << "exchange tile" << std::endl;		
+		std::cout << "exchange tile" << std::endl;
+		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
+		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
+		return false;
 	} else if (action == 4) {
 		std::cout << "flip tile horizontally" << std::endl;
+		return false;
 	} else if (action == 5) {
 		std::cout << "flip tile vertically" << std::endl;
+		return false;
 	}
 }
 
