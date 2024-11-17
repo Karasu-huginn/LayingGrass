@@ -17,6 +17,7 @@ int main()
     }
     Game game(players_number);
     game.game_start();
+    game.game_loop();
     return 0;
 }
 

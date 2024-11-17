@@ -118,8 +118,21 @@ void Game::clear_terminal() {
 }
 
 void Game::game_start() {
+	char player_character;
+
+	for (int i = 0; i < players_number; i++) {
+		clear_terminal();
+		std::cout << std::endl << "Player " << players[i].get_name() << "'s turn :" << std::endl;
+		player_character = players[i].get_char();
+		place_base(player_character);
+		board.display_board();
+	}
+}
+
+void Game::game_loop() {
     int action_choice;
 	bool end_turn;
+	int exchange_number;
 
     while (player_turn > 0) { 
         for (int i = 0; i < players_number; i++) {
@@ -137,6 +150,14 @@ void Game::game_start() {
 				if (action_choice == 6) {
                     break;
                 }
+				if (action_choice == 1) {
+					exchange_number = players[i].get_exchange_number();
+					if (exchange_number == 1) {
+						std::cout << "You don't have any tile to exchange!" << std::endl;
+						Sleep(2000);
+                        continue;
+					}
+				}
 				end_turn = make_action(action_choice);
 				if (end_turn) {
                     break;
@@ -149,30 +170,65 @@ void Game::game_start() {
     }
 
     std::cout << "GG WP" << std::endl;
-	display_current_next_tiles_queued(tiles_queue);
+	//display_current_next_tiles_queued(tiles_queue);
 	//bases_placement();
 	//board.display_board();
 }
 
+void Game::display_current_tile() {
+	std::cout << "Current tile : " << std::endl;
+    tiles_queue.front().display();
+}
 
 bool Game::make_action(int action) {
 	if (action == 1) {
 		std::cout << "exchange tile" << std::endl;
+		exchange_tile();
 		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
+		
 		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
+		tiles_queue.front().rotate();
+		display_current_tile();
 		return false;
 	} else if (action == 4) {
 		std::cout << "flip tile horizontally" << std::endl;
+		tiles_queue.front().flip_h();
+		display_current_tile();
 		return false;
 	} else if (action == 5) {
 		std::cout << "flip tile vertically" << std::endl;
+		tiles_queue.front().flip_v();
+		display_current_tile();
 		return false;
 	}
+	return false;
 }
+
+void Game::exchange_tile() {
+	int choice;
+
+	display_current_next_tiles_queued(tiles_queue);
+	while (true) {
+		std::cout << "Choose the tile you want to exchange with (1-5): ";
+    	std::cin >> choice;
+		if (choice >= 1 && choice <= 5) {
+			break;
+		} else {
+			std::cout << "Invalid input!" << std::endl;
+            std::cin.clear();
+            std::cin.ignore();
+		}
+	}
+	for (choice = choice; choice != 0; choice--) {
+		tiles_queue.pop();
+	}
+}
+
+
 
 
 

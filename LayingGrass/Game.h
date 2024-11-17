@@ -20,13 +20,16 @@ public:
 	bool queue_has_number(int number, int rand_tile_ind[96]);
 	void display_current_next_tiles_queued(std::queue<Tile> queue);
 	int display_turn_actions();
-	void game_start();
+	void game_loop();
 	void interpret_coords(char& x, char& y);
 	void place_stone();
 	void bases_placement();
 	void place_base(char player);
 	void clear_terminal();
 	bool make_action(int action);
+	void display_current_tile();
+	void game_start();
+	void exchange_tile();
 private:
 	int tiles_number;
 	int players_number;
