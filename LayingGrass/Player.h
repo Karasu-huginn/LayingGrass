@@ -6,6 +6,10 @@ public:
 	Player(std::string n, char c);
 	~Player();
 	std::string get_name();
+	int get_exchange_number();
+
+	void increment_exchange_number();
+	void decrement_exchange_number();
 	char get_char();
 private:
 	char character;

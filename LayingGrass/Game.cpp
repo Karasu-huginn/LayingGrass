@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <cstdlib>
+#include <windows.h>
 
 Game::Game(int pn) {
 	std::cout << "Initializing Game..." << std::endl;
@@ -95,10 +97,11 @@ int Game::display_turn_actions() {
     std::cout << "3- Rotate tile" << std::endl;
     std::cout << "4- Flip tile (horizontaly)" << std::endl;
     std::cout << "5- Flip tile (verticaly)" << std::endl;
+	std::cout << "6- End turn" << std::endl;
 	while (true) {
     	std::cout << "Choose your action (1, 2, 3, 4, 5): ";
 		std::cin >> choice;
-		if (choice >= 1 && choice <= 5) {
+		if (choice >= 1 && choice <= 6) {
 			break;
 		} else {
 			std::cout << "Invalid input!" << std::endl;
@@ -110,19 +113,62 @@ int Game::display_turn_actions() {
 }
 
 
-
-
-
-
-
+void Game::clear_terminal() {
+	system("cls");
+}
 
 void Game::game_start() {
-	//display_current_next_tiles_queued(tiles_queue);
-	//display_turn_actions();
-	bases_placement();
-	board.display_board();
+    int action_choice;
 
+    while (player_turn > 0) { 
+        for (int i = 0; i < players_number; i++) {
+            if (player_turn == 0) {
+                break;
+            }
+			while (true) {
+				clear_terminal();
+            	std::cout << std::endl << "Player " << players[i].get_name() << "'s turn :" << std::endl;
+				std::cout << "turns left :" << player_turn << std::endl;
+				board.display_board();
+				std::cout << std::endl;
+				display_current_next_tiles_queued(tiles_queue);
+            	action_choice = display_turn_actions(); 
+				if (action_choice == 6) {
+                    break;
+                }
+				make_action(action_choice);
+			}
+
+
+
+			std::cout << "ending turn..." << std::endl;
+			Sleep(3000);
+            player_turn--;
+        }
+    }
+
+    std::cout << "GG WP" << std::endl;
+	display_current_next_tiles_queued(tiles_queue);
+	//bases_placement();
+	//board.display_board();
 }
+
+
+void Game::make_action(int action) {
+	if (action == 1) {
+		std::cout << "exchange tile" << std::endl;		
+	} else if (action == 2) {
+		std::cout << "place tile" << std::endl;
+	} else if (action == 3) {
+		std::cout << "rotate tile" << std::endl;
+	} else if (action == 4) {
+		std::cout << "flip tile horizontally" << std::endl;
+	} else if (action == 5) {
+		std::cout << "flip tile vertically" << std::endl;
+	}
+}
+
+
 
 void Game::interpret_coords(char &x, char &y) {
 	if (x > 'Z') {
