@@ -27,7 +27,6 @@ public:
 	void place_base(char player);
 	void clear_terminal();
 	bool make_action(int action);
-	void display_current_tile();
 	void game_start();
 	void exchange_tile();
 private:

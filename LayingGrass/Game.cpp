@@ -175,11 +175,6 @@ void Game::game_loop() {
 	//board.display_board();
 }
 
-void Game::display_current_tile() {
-	std::cout << "Current tile : " << std::endl;
-    tiles_queue.front().display();
-}
-
 bool Game::make_action(int action) {
 	if (action == 1) {
 		std::cout << "exchange tile" << std::endl;
@@ -192,17 +187,14 @@ bool Game::make_action(int action) {
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
 		tiles_queue.front().rotate();
-		display_current_tile();
 		return false;
 	} else if (action == 4) {
 		std::cout << "flip tile horizontally" << std::endl;
 		tiles_queue.front().flip_h();
-		display_current_tile();
 		return false;
 	} else if (action == 5) {
 		std::cout << "flip tile vertically" << std::endl;
 		tiles_queue.front().flip_v();
-		display_current_tile();
 		return false;
 	}
 	return false;
