@@ -152,7 +152,7 @@ void Game::game_loop() {
                 }
 				if (action_choice == 1) {
 					exchange_number = players[i].get_exchange_number();
-					if (exchange_number == 1) {
+					if (exchange_number == 0) {
 						std::cout << "You don't have any tile to exchange!" << std::endl;
 						Sleep(2000);
                         continue;
@@ -187,7 +187,7 @@ bool Game::make_action(int action) {
 		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
-		
+
 		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
