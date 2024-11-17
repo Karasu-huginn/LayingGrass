@@ -152,10 +152,12 @@ void Game::game_loop() {
                 }
 				if (action_choice == 1) {
 					exchange_number = players[i].get_exchange_number();
-					if (exchange_number == 0) {
-						std::cout << "You don't have any tile to exchange!" << std::endl;
+					if (exchange_number <= 0) {
+						std::cout << "You don't have any exchange bonus !" << std::endl;
 						Sleep(2000);
                         continue;
+					} else {
+						players[i].decrement_exchange_number();
 					}
 				}
 				end_turn = make_action(action_choice);
@@ -168,6 +170,12 @@ void Game::game_loop() {
             player_turn--;
         }
     }
+	std::cout << "Game Ended" << std::endl;
+	std::cout << "Last Actions !" << std::endl;
+	for (int i = 0; i < players_number; i++) {
+		std::cout << "Player " << players[i].get_name() << " has " << players[i].get_exchange_number() << " exchange bonus." << std::endl;
+	}
+	//* At the very end, players may pay a tile exchange coupon to buy a 1x1 grass tile. Players may place it (or them) as they wish on the territory table
 
     std::cout << "GG WP" << std::endl;
 	//display_current_next_tiles_queued(tiles_queue);
@@ -218,6 +226,7 @@ void Game::exchange_tile() {
 	for (choice = choice; choice != 0; choice--) {
 		tiles_queue.pop();
 	}
+	
 }
 
 

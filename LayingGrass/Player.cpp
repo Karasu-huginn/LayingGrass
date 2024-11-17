@@ -3,7 +3,7 @@
 Player::Player(std:: string n, char c) {
 	name = n;
 	character = 'a' + c;
-	exchange_number = 0;
+	exchange_number = 1;
 }
 
 Player::~Player() {
