@@ -8,6 +8,8 @@
 #include <fstream>
 #include <random>
 #include <algorithm>
+#include <cstdlib>
+#include <windows.h>
 
 class Game {
 public:
