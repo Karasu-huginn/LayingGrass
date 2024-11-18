@@ -4,6 +4,7 @@ int main()
 {
 
     int players_number;
+    system("cls");
     while (true) {
         std::cout << "Please indicate how many players are participating : ";
         std::cin >> players_number;
