@@ -96,7 +96,7 @@ int Game::display_turn_actions(int exchange_number) {
     std::cout << "3- Rotate tile" << std::endl;
     std::cout << "4- Flip tile (horizontally)" << std::endl;
     std::cout << "5- Flip tile (vertically)" << std::endl;
-    std::cout << "6- End turn" << std::endl;
+    std::cout << "6- End turn" << std::endl << std::endl;
 	converted_choice = input_int(1, 6, "Choose your action (1, 2, 3, 4, 5, 6): ");
     return converted_choice;
 }
@@ -148,7 +148,7 @@ void Game::clear_terminal() {
 
 void Game::game_start() {
 	char player_character;
-
+	
 	for (int i = 0; i < players_number; i++) {
 		clear_terminal();
 		std::cout << std::endl << "Player " << players[i].get_name() << "'s turn :" << std::endl;
@@ -166,7 +166,6 @@ void Game::display_ending_turn() {
 void Game::game_loop() {
     int action_choice;
 	bool end_turn;
-	int exchange_number;
 
     while (player_turn > 0) { 
         for (int i = 0; i < players_number; i++) {
@@ -178,17 +177,15 @@ void Game::game_loop() {
 				board.display_board();
 				std::cout << std::endl;
 				display_current_next_tiles_queued(tiles_queue);
-            	std::cout << "Player " << players[i].get_name() << "'s turn :" << std::endl;
-				std::cout << "turns left :" << player_turn << std::endl;
-				exchange_number = players[i].get_exchange_number();
-            	action_choice = display_turn_actions(exchange_number); 
+				std::cout << "turns left : " << player_turn << std::endl;
+            	std::cout << "Player " << players[i].get_name() << "'s turn :" << std::endl << std::endl;
+            	action_choice = display_turn_actions(players[i].get_exchange_number()); 
 				if (action_choice == 6) {
                     break;
                 }
 				if (action_choice == 1) {
-					if (exchange_number <= 0) {
-						std::cout << "You don't have any exchange bonus !" << std::endl;
-						display_ending_turn();
+					if (players[i].get_exchange_number() <= 0) {
+						std::cout << "You don't have any exchange coupons !" << std::endl;
                         continue;
 					} else {
 						players[i].decrement_exchange_number();
@@ -209,27 +206,26 @@ void Game::game_loop() {
 
 
 void Game::game_last_actions(std::vector<Player> &players) {
-	int exchange_number;
-
 	for (int i = 0; i < players_number; i++) {
 		clear_terminal();
 		std::cout << "Game Ended" << std::endl;
 		std::cout << "Last Actions !" << std::endl << std::endl;
 		board.display_board();
+		std::cout << "Player " << players[i].get_name() << "'s turn :" << std::endl;
 		std::cout << "Player " << players[i].get_name() << " has " << players[i].get_exchange_number() << " exchange coupons" << std::endl;
-		exchange_number = players[i].get_exchange_number();
-		if (exchange_number <= 0) {
-			std::cout << "Player " << players[i].get_name() << " has no more exchange bonus" << std::endl;
-			std::cout << "ending turn..." << std::endl;
-			Sleep(1000);
+		if (players[i].get_exchange_number() <= 0) {
+			std::cout << "Player " << players[i].get_name() << " has no more exchange coupons !" << std::endl;
+			display_ending_turn();
 			continue;
 		} else {
-			while (exchange_number > 0) {
+			while (players[i].get_exchange_number() > 0) {
 				std::cout << "Player " << players[i].get_name() << " can buy : " << players[i].get_exchange_number()<< " grass tile(s)" <<std::endl;
                 buy_grass_tile();
 				players[i].decrement_exchange_number();
-                exchange_number--;
 			}
+			std::cout << "Player " << players[i].get_name() << " has no more exchange coupons to buy grass tile(s) !" << std::endl;
+            display_ending_turn();
+            continue;
 		}
 	}
 }
@@ -291,7 +287,7 @@ void Game::interpret_coords(char &x, char &y) {
 }
 
 void Game::ask_coords(char &user_x, char &user_y, std::string text) {
-	std::cout << "Please enter the coordinates of the square you'd like to place your " << text << " on" << std::endl;
+	std::cout << std::endl << "Please enter the coordinates of the square you'd like to place your " << text << " on x (columns) and y (lines)" << std::endl;
 	input_string(user_x, "x : ");
 	input_string(user_y, "y : ");
 	interpret_coords(user_x, user_y);
