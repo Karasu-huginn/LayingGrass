@@ -4,6 +4,7 @@
 #include <fstream>
 #include <random>
 #include "Color.h"
+#include "Tile.h"
 
 class Board {
 public:
@@ -17,7 +18,10 @@ public:
 	void display_board();
 	void check_victory();
 	bool place_base(char player, int x, int y);
-	void place_tile();
+	bool is_enemy_close(int x, int y, char player);
+	bool can_place_tile(Tile tile, int x, int y, char player);
+	void tile_apply(Tile tile, int x, int y, char player);
+	bool place_tile(Tile tile, int x, int y, char player);
 	void rob_tile();
 	bool place_stone(int x, int y);
 	bool check_neighborhood(int x, int y, char goal);

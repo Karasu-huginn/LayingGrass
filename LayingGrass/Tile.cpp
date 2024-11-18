@@ -22,6 +22,11 @@ Tile::~Tile() {
 
 }
 
+// refactor [] operator overload ?
+char Tile::get_cell(int x, int y) {
+	return shape[x][y];
+}
+
 void Tile::display() {
 	for (int x = 0; x < 6; x++) {
 		for (int y = 0; y < 6; y++) {
@@ -29,7 +34,7 @@ void Tile::display() {
 				std::cout << "0";
 			}
 			else {
-				std::cout << "  ";
+				std::cout << ".";
 			}
 		}
 		std::cout << std::endl;

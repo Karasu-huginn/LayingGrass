@@ -22,9 +22,11 @@ public:
 	int display_turn_actions();
 	void game_start();
 	void interpret_coords(char& x, char& y);
+	void ask_coords(char& user_x, char& user_y, std::string text);
 	void place_stone();
 	void bases_placement();
 	void place_base(char player);
+	void place_tile();
 private:
 	int tiles_number;
 	int players_number;

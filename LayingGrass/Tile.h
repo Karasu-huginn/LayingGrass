@@ -9,6 +9,7 @@ public:
 	Tile();
 	Tile(nlohmann::json d);
 	~Tile();
+	char get_cell(int x, int y);
 	void display();
 	void deep_copy(bool(&tmp_sh)[6][6]);
 	void deep_paste(bool(tmp_sh)[6][6]);

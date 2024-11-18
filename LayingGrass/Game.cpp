@@ -115,11 +115,11 @@ int Game::display_turn_actions() {
 
 
 
-
 void Game::game_start() {
-	//display_current_next_tiles_queued(tiles_queue);
+	display_current_next_tiles_queued(tiles_queue);
 	//display_turn_actions();
-	bases_placement();
+	place_tile();
+//	bases_placement();
 	board.display_board();
 
 }
@@ -139,15 +139,19 @@ void Game::interpret_coords(char &x, char &y) {
 	}
 }
 
-void Game::place_stone() {
-	char user_x;
-	char user_y;
-	do {
-	std::cout << "Please enter the coordinates of the square you'd like to place your stone on.\nx : ";
+void Game::ask_coords(char &user_x, char &user_y, std::string text) {
+	std::cout << "Please enter the coordinates of the square you'd like to place your "<< text <<" on.\nx : ";
 	std::cin >> user_y;
 	std::cout << "y : ";
 	std::cin >> user_x;
 	interpret_coords(user_x, user_y);
+}
+
+void Game::place_stone() {
+	char user_x;
+	char user_y;
+	do {
+		ask_coords(user_x, user_y, "stone");
 	} while (!board.place_stone(int(user_x), int(user_y)));
 }
 
@@ -161,10 +165,16 @@ void Game::place_base(char player) {
 	char user_x;
 	char user_y;
 	do {
-		std::cout << "Please enter the coordinates of the square you'd like to place your base on.\nx : ";
-		std::cin >> user_y;
-		std::cout << "y : ";
-		std::cin >> user_x;
-		interpret_coords(user_x, user_y);
+		ask_coords(user_x, user_y, "starting tile");
 	} while (!board.place_base(player ,int(user_x), int(user_y)));
+}
+
+void Game::place_tile() {
+	char user_x;
+	char user_y;
+	char player = 'a';
+	do {
+		ask_coords(user_x, user_y, "tile");
+	} while (!board.place_tile(tiles_queue.front(), user_x, user_y, player));
+	tiles_queue.pop();
 }
