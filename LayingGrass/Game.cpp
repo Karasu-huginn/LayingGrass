@@ -291,5 +291,7 @@ void Game::place_tile() {
 	do {
 		ask_coords(user_x, user_y, "tile");
 	} while (!board.place_tile(tiles_queue.front(), user_x, user_y, player));
+	Tile temp_tile = tiles_queue.front();
 	tiles_queue.pop();
+	tiles_queue.push(temp_tile);
 }

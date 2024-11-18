@@ -20,8 +20,7 @@ Board::Board(int pn) {
 		}
 		board.push_back(line);
 	}
-	//init_bonuses();
-	board[2][2] = 'A';	// temp
+	init_bonuses();
 	display_board();
 }
 
@@ -113,7 +112,9 @@ void Board::display_board() {
 }
 
 void Board::check_victory() {
+	for (char character = 'A'; character < char('A' + player_number); character++) {
 
+	}
 }
 
 bool Board::place_base(char player, int x, int y) {
@@ -130,7 +131,6 @@ bool Board::is_enemy_close(int x, int y, char player) {
 	for (char character = 'A'; character < 'A' + player_number; character++) {
 		if (character != player-32) {
 			if (check_neighborhood(x, y, character)) {
-				std::cout << "ici" << std::endl;
 				return true;
 			}
 		}
@@ -138,7 +138,6 @@ bool Board::is_enemy_close(int x, int y, char player) {
 	for (char character = 'a'; character < 'a' + player_number; character++) {
 		if (character != player) {
 			if (check_neighborhood(x, y, character)) {
-				std::cout << "la" << std::endl;
 				return true;
 			}
 		}
@@ -154,7 +153,6 @@ bool Board::can_place_tile(Tile tile, int x, int y, char player) {
 					return false;
 				}
 				if (is_enemy_close(x+i, y+j, player)) {
-					std::cout << "méchant !" << std::endl;
 					return false;
 				}
 				if (check_neighborhood(x + i, y + j, player)) {
@@ -180,14 +178,11 @@ void Board::tile_apply(Tile tile, int x, int y, char player) {
 }
 
 bool Board::place_tile(Tile tile, int x, int y, char player) {
-	std::cout << player << " et " << char(board[2][2]) << " ou " << char(board[2][2]+32) << std::endl; // temp
 	if (can_place_tile(tile, x, y, player)) {
 		tile_apply(tile, x, y, player);
-		std::cout << "placed !" << std::endl;
 		return true;
 	}
 	else {
-		std::cout << "not placeable :(" << std::endl;
 		return false;
 	}
 }
@@ -197,7 +192,6 @@ void Board::rob_tile() {
 }
 
 bool Board::place_stone(int x, int y) {
-	std::cout << "x = " << x << " | y = " << y << std::endl;
 	if (board[x][y] == '0') {
 		board[x][y] = '$';
 		return true;
@@ -208,21 +202,16 @@ bool Board::place_stone(int x, int y) {
 }
 
 bool Board::check_neighborhood(int x, int y, char goal) {
-	std::cout << "checking " << x << ":" << y << " for char " << goal << std::endl;
 	if (x + 1 < board_size and board[x + 1][y] == goal) {
-		std::cout << "found x+1" << std::endl;
 		return true;
 }
 	if (x - 1 >= 0 and board[x - 1][y] == goal) {
-		std::cout << "found x-1" << std::endl;
 		return true;
 }
 	if (y + 1 < board_size and board[x][y + 1] == goal) {
-		std::cout << "found y+1" << std::endl;
 		return true;
 }
 	if (y - 1 >= 0 and board[x][y - 1] == goal) {
-		std::cout << "found y-1" << std::endl;
 		return true;
 	}
 	// check north, south, east, west for char goal contact
