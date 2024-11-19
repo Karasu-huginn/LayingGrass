@@ -220,7 +220,7 @@ void Game::game_last_actions(std::vector<Player> &players) {
 		} else {
 			while (players[i].get_exchange_number() > 0) {
 				std::cout << "Player " << players[i].get_name() << " can buy : " << players[i].get_exchange_number()<< " grass tile(s)" <<std::endl;
-                buy_grass_tile();
+                buy_grass_tile(players[i].get_char());
 				players[i].decrement_exchange_number();
 			}
 			std::cout << "Player " << players[i].get_name() << " has no more exchange coupons to buy grass tile(s) !" << std::endl;
@@ -303,10 +303,9 @@ void Game::place_stone() {
 	} while (!board.place_stone(int(user_x), int(user_y)));
 }
 
-void Game::buy_grass_tile() {
+void Game::buy_grass_tile(char player) {
 	char user_x;
 	char user_y;
-	char player = 'a';
 	do {
 		ask_coords(user_x, user_y, "grass tile");
 	} while (!board.buy_grass_tile(int(user_x), int(user_y), player));

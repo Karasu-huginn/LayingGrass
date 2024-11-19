@@ -34,7 +34,7 @@ public:
 	void game_start();
 	void exchange_tile();
 	void game_last_actions(std::vector<Player> &players);
-	void buy_grass_tile();
+	void buy_grass_tile(char player);
 	int input_int(int min, int max, std::string text);
 	void input_string(char &user_pos, std::string text);
 	void display_ending_turn();
