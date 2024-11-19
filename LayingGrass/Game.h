@@ -28,7 +28,7 @@ public:
 	void place_stone();
 	void bases_placement();
 	void place_base(char player);
-	void place_tile();
+	void place_tile(char player);
 	void clear_terminal();
 	bool make_action(int action);
 	void game_start();
@@ -40,4 +40,5 @@ private:
 	Board board;
 	std::vector<Player> players;
 	int player_turn;
+	Color color;
 };

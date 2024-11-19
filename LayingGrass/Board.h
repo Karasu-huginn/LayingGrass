@@ -16,7 +16,9 @@ public:
 	void display_board_x_coords();
 	void display_board_char(int x, int y);
 	void display_board();
-	void check_victory();
+	int count_grass(char player);
+	int count_square(int x, int y, char player);
+	void check_victory(int& score, int& winning_player);
 	bool place_base(char player, int x, int y);
 	bool is_enemy_close(int x, int y, char player);
 	bool can_place_tile(Tile tile, int x, int y, char player);

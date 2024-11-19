@@ -111,9 +111,58 @@ void Board::display_board() {
 
 }
 
-void Board::check_victory() {
-	for (char character = 'A'; character < char('A' + player_number); character++) {
+int Board::count_grass(char player) {
+	int grass_number = 0;
+	for (int x = 0; x < board_size; x++) {
+		for (int y = 0; y < board_size; y++) {
+			if (board[x][y] == player or board[x][y] == char(player + 32)) {
+				grass_number++;
+			}
+		}
+	}
+	return grass_number;
+}
 
+int Board::count_square(int x, int y, char player) {
+	int counter = 0;
+	while (counter < board_size+x and counter < board_size+y) {
+		for (int i = 0; i < counter; i++) {
+			for (int j = 0; j < counter; j++) {
+				if (x + i >= board_size or y + j >= board_size) {
+					continue;
+				}
+				if (board[x + i][y + j] != player and board[x + i][y + j] != char(player + 32))
+				{
+					return --counter;
+				}
+			}
+		}
+		counter++;
+	}
+	return 0;
+}
+
+void Board::check_victory(int &score, int &winning_player) {
+	int temp_score;
+	for (char character = 'A'; character < char('A' + player_number); character++) {
+		for (int x = 0; x < board_size; x++) {
+			for (int y = 0; y < board_size; y++) {
+				if (board[x][y] != character and board[x][y] != character + 32) {
+					continue;
+				}
+				temp_score = count_square(x, y, character);
+				if (temp_score < score) {
+					continue;
+				}
+				else if (temp_score == score) {
+					if (count_grass(character) < count_grass(char(winning_player + 'A'))) {
+						continue;
+					}
+				}
+				score = temp_score;
+				winning_player = int(character - 'A');
+			}
+		}
 	}
 }
 
@@ -178,13 +227,15 @@ void Board::tile_apply(Tile tile, int x, int y, char player) {
 }
 
 bool Board::place_tile(Tile tile, int x, int y, char player) {
-	if (can_place_tile(tile, x, y, player)) {
-		tile_apply(tile, x, y, player);
-		return true;
-	}
-	else {
+	if (!can_place_tile(tile, x, y, player)) {
 		return false;
 	}
+	if (x >= board_size - 5 or y >= board_size - 5) {
+		return false;
+	}
+	tile_apply(tile, x, y, player);
+	return true;
+	
 }
 
 void Board::rob_tile() {

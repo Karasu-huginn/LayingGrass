@@ -284,10 +284,9 @@ void Game::place_base(char player) {
 	} while (!board.place_base(player ,int(user_x), int(user_y)));
 }
 
-void Game::place_tile() {
+void Game::place_tile(char player) {
 	char user_x;
 	char user_y;
-	char player = 'a';
 	do {
 		ask_coords(user_x, user_y, "tile");
 	} while (!board.place_tile(tiles_queue.front(), user_x, user_y, player));
