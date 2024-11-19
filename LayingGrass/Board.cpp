@@ -238,8 +238,12 @@ bool Board::place_tile(Tile tile, int x, int y, char player) {
 	
 }
 
-void Board::rob_tile() {
-
+bool Board::rob_tile(int x, int y, char player) {
+	if (board[x][y] != player) {
+		board[x][y] = player;
+		return true;
+	}
+	return false;
 }
 
 bool Board::can_place_stone(Tile tile, int x, int y) {

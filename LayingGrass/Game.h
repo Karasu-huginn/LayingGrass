@@ -26,6 +26,7 @@ public:
 	void interpret_coords(char& x, char& y);
 	void ask_coords(char& user_x, char& user_y, std::string text);
 	void place_stone();
+	void rob_tile(char player);
 	void bases_placement();
 	void place_base(char player);
 	void place_tile(char player);

@@ -281,7 +281,7 @@ void Game::interpret_coords(char &x, char &y) {
 }
 
 void Game::ask_coords(char &user_x, char &user_y, std::string text) {
-	std::cout << std::endl << "Please enter the coordinates of the square you'd like to place your " << text << " on x (columns) and y (lines)" << std::endl;
+	std::cout << std::endl << "Please enter the coordinates of the square you'd like to " << text << " on x (columns) and y (lines)" << std::endl;
 	input_string(user_y, "x : ");
 	input_string(user_x, "y : ");
 	interpret_coords(user_x, user_y);
@@ -293,18 +293,26 @@ void Game::place_stone() {
 	char user_x;
 	char user_y;
 	do {
-		ask_coords(user_x, user_y, "stone");
+		ask_coords(user_x, user_y, "place your stone");
 	} while (!board.place_stone(tiles_queue.front(), int(user_x), int(user_y)));
 	Tile temp_tile = tiles_queue.front();
 	tiles_queue.pop();
 	tiles_queue.push(temp_tile);
 }
 
+void Game::rob_tile(char player) {
+	char user_x;
+	char user_y;
+	do {
+		ask_coords(user_x, user_y, "rob");
+	} while (board.rob_tile(int(user_x), int(user_y), player));
+}
+
 void Game::buy_grass_tile(char player) {
 	char user_x;
 	char user_y;
 	do {
-		ask_coords(user_x, user_y, "grass tile");
+		ask_coords(user_x, user_y, "place your grass tile");
 	} while (!board.buy_grass_tile(int(user_x), int(user_y), player));
 }
 
@@ -318,7 +326,7 @@ void Game::place_base(char player) {
 	char user_x;
 	char user_y;
 	do {
-		ask_coords(user_x, user_y, "starting tile");
+		ask_coords(user_x, user_y, "place your starting tile");
 	} while (!board.place_base(player ,int(user_x), int(user_y)));
 }
 
@@ -326,7 +334,7 @@ void Game::place_tile(char player) {
 	char user_x;
 	char user_y;
 	do {
-		ask_coords(user_x, user_y, "tile");
+		ask_coords(user_x, user_y, "place your tile");
 	} while (!board.place_tile(tiles_queue.front(), user_x, user_y, player));
 	Tile temp_tile = tiles_queue.front();
 	tiles_queue.pop();

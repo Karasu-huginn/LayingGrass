@@ -25,7 +25,7 @@ public:
 	bool can_place_tile(Tile tile, int x, int y, char player);
 	void tile_apply(Tile tile, int x, int y, char player);
 	bool place_tile(Tile tile, int x, int y, char player);
-	void rob_tile();
+	bool rob_tile(int x, int y, char player);
 	bool place_stone(Tile tile, int x, int y);
 	bool can_place_stone(Tile tile, int x, int y);
 	bool check_neighborhood(int x, int y, char goal);
