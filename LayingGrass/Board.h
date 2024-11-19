@@ -5,6 +5,7 @@
 #include <random>
 #include "Color.h"
 #include "Tile.h"
+#include "Player.h"
 
 class Board {
 public:
@@ -29,7 +30,7 @@ public:
 	bool check_neighborhood(int x, int y, char goal);
 	bool check_full_neighborhood(int x, int y, char goal);
 	bool buy_grass_tile (int x, int y, char player);
-	void get_bonus(int& exchange, int& rob, int& stone, char player);
+	void get_bonus(Player &player);
 
 private:
 	std::vector<std::vector<char>> board;

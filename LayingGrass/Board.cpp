@@ -295,20 +295,21 @@ bool Board::check_full_neighborhood(int x, int y, char goal) {
 }
 
 
-void Board::get_bonus(int &exchange, int &rob, int &stone, char player) {
+void Board::get_bonus(Player &player) {
+	char player_char = player.get_char();
 	for (int x = 0; x < board_size; x++){
 		for (int y = 0; y < board_size; y++){
-			if (board[x][y] == '1' and check_full_neighborhood(x, y, player)) {
-				exchange++;
-				board[x][y] = player;
+			if (board[x][y] == '1' and check_full_neighborhood(x, y, player_char)) {
+				player.add_exchange();
+				board[x][y] = player_char;
 			}
-			if (board[x][y] == '2' and check_full_neighborhood(x, y, player)) {
-				stone++;
-				board[x][y] = player;
+			if (board[x][y] == '2' and check_full_neighborhood(x, y, player_char)) {
+				player.add_stone();
+				board[x][y] = player_char;
 			}
-			if (board[x][y] == '3' and check_full_neighborhood(x, y, player)) {
-				rob++;
-				board[x][y] = player;
+			if (board[x][y] == '3' and check_full_neighborhood(x, y, player_char)) {
+				player.add_rob();
+				board[x][y] = player_char;
 			}
 		}
 	}

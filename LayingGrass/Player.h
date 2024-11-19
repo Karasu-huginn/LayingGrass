@@ -11,6 +11,10 @@ public:
 	void increment_exchange_number();
 	void decrement_exchange_number();
 	char get_char();
+	void add_exchange();
+	void add_stone();
+	void add_rob();
+
 private:
 	char character;
 	std::string name;

@@ -32,3 +32,15 @@ void Player::decrement_exchange_number() {
 char Player::get_char() {
 	return character;
 }
+
+void Player::add_exchange() {
+	exchange_number++;
+}
+
+void Player::add_stone() {
+	stone_number++;
+}
+
+void Player::add_rob() {
+	rob_number++;
+}
