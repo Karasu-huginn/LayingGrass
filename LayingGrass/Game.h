@@ -21,7 +21,7 @@ public:
 	void generate_rand_ind(int(&rand_tile_ind)[96]);
 	bool queue_has_number(int number, int rand_tile_ind[96]);
 	void display_current_next_tiles_queued(std::queue<Tile> queue);
-	int display_turn_actions();
+	int display_turn_actions(int exchange_number);
 	void game_loop();
 	void interpret_coords(char& x, char& y);
 	void ask_coords(char& user_x, char& user_y, std::string text);
@@ -33,6 +33,12 @@ public:
 	bool make_action(int action);
 	void game_start();
 	void exchange_tile();
+	void game_last_actions(std::vector<Player> &players);
+	void buy_grass_tile(char player);
+	int input_int(int min, int max, std::string text);
+	void input_string(char &user_pos, std::string text);
+	void display_ending_turn();
+	void clear_cin();
 private:
 	int tiles_number;
 	int players_number;

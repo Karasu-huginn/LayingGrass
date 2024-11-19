@@ -252,6 +252,15 @@ bool Board::place_stone(int x, int y) {
 	}
 }
 
+bool Board::buy_grass_tile(int x, int y, char player) {
+	if (board[x][y] == '0') {
+		board[x][y] = player;
+        return true;
+	} else {
+		return false;
+	}
+}
+
 bool Board::check_neighborhood(int x, int y, char goal) {
 	if (x + 1 < board_size and board[x + 1][y] == goal) {
 		return true;

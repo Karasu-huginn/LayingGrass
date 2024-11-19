@@ -88,33 +88,59 @@ void Game::display_current_next_tiles_queued(std::queue<Tile> tiles_queue) {
     }
 }
 
-int Game::display_turn_actions() {
-    std::string choice;
+int Game::display_turn_actions(int exchange_number) {
     int converted_choice;
 
-    std::cout << "1- Exchange tile" << std::endl;
+    std::cout << "1- Exchange tile (total : " << exchange_number << ")" << std::endl;
     std::cout << "2- Place tile" << std::endl;
     std::cout << "3- Rotate tile" << std::endl;
     std::cout << "4- Flip tile (horizontally)" << std::endl;
     std::cout << "5- Flip tile (vertically)" << std::endl;
-    std::cout << "6- End turn" << std::endl;
+    std::cout << "6- End turn" << std::endl << std::endl;
+	converted_choice = input_int(1, 6, "Choose your action (1, 2, 3, 4, 5, 6): ");
+    return converted_choice;
+}
 
-    while (true) {
-        std::cout << "Choose your action (1, 2, 3, 4, 5, 6): ";
-        std::getline(std::cin, choice);
+void Game::clear_cin() {
+	std::cin.clear();
+	std::cin.sync();
+}
 
-        if (choice.length() == 1 && std::isdigit(choice[0])) {
-            converted_choice = std::stoi(choice);
-            if (converted_choice >= 1 && converted_choice <= 6) {
+int Game::input_int(int min, int max, std::string text) {
+    std::string input;
+    int converted_input;
+
+	while (true) {
+		clear_cin();
+        std::cout << text;
+        std::getline(std::cin, input);
+
+        if (input.length() == 1 and std::isdigit(input[0])) {
+            converted_input = std::stoi(input);
+            if (converted_input >= min and converted_input <= max) {
                 break; 
             }
         }
         std::cout << "Invalid input!" << std::endl;
     }
-
-    return converted_choice;
+    return converted_input;
 }
 
+void Game::input_string(char &user_pos, std::string text) {
+	std::string input;
+
+	while (true) {
+		clear_cin();
+		std::cout << text;
+        std::getline(std::cin, input);
+		if (input.length() == 1 and std::isalpha(input[0]) and input[0] != ' ') {
+            user_pos = input[0];
+            break;
+        } else {
+			std::cout << "Invalid input!" << std::endl;
+		}
+	}
+}
 
 void Game::clear_terminal() {
 	system("cls");
@@ -122,7 +148,7 @@ void Game::clear_terminal() {
 
 void Game::game_start() {
 	char player_character;
-
+	
 	for (int i = 0; i < players_number; i++) {
 		clear_terminal();
 		std::cout << std::endl << "Player " << players[i].get_name() << "'s turn :" << std::endl;
@@ -132,10 +158,14 @@ void Game::game_start() {
 	}
 }
 
+void Game::display_ending_turn() {
+	std::cout << "ending turn..." << std::endl;
+	Sleep(1000);
+}
+
 void Game::game_loop() {
     int action_choice;
 	bool end_turn;
-	int exchange_number;
 
     while (player_turn > 0) { 
         for (int i = 0; i < players_number; i++) {
@@ -144,20 +174,18 @@ void Game::game_loop() {
             }
 			while (true) {
 				clear_terminal();
-            	std::cout << std::endl << "Player " << players[i].get_name() << "'s turn :" << std::endl;
-				std::cout << "turns left :" << player_turn << std::endl;
 				board.display_board();
 				std::cout << std::endl;
 				display_current_next_tiles_queued(tiles_queue);
-            	action_choice = display_turn_actions(); 
+				std::cout << "turns left : " << player_turn << std::endl;
+            	std::cout << "Player " << players[i].get_name() << "'s turn :" << std::endl << std::endl;
+            	action_choice = display_turn_actions(players[i].get_exchange_number()); 
 				if (action_choice == 6) {
                     break;
                 }
 				if (action_choice == 1) {
-					exchange_number = players[i].get_exchange_number();
-					if (exchange_number <= 0) {
-						std::cout << "You don't have any exchange bonus !" << std::endl;
-						Sleep(1000);
+					if (players[i].get_exchange_number() <= 0) {
+						std::cout << "You don't have any exchange coupons !" << std::endl;
                         continue;
 					} else {
 						players[i].decrement_exchange_number();
@@ -168,23 +196,38 @@ void Game::game_loop() {
                     break;
                 }
 			}
-			std::cout << "ending turn..." << std::endl;
-			Sleep(1000);
+			display_ending_turn();
             player_turn--;
         }
     }
-	std::cout << "Game Ended" << std::endl;
-	std::cout << "Last Actions !" << std::endl << std::endl;
-	for (int i = 0; i < players_number; i++) {
-		std::cout << "Player " << players[i].get_name() << " has " << players[i].get_exchange_number() << " exchange bonus." << std::endl;
-		
-	}
-	//* At the very end, players may pay a tile exchange coupon to buy a 1x1 grass tile. Players may place it (or them) as they wish on the territory table
-
+	game_last_actions(players);
     std::cout << "GG WP" << std::endl;
-	//display_current_next_tiles_queued(tiles_queue);
-	//bases_placement();
-	//board.display_board();
+}
+
+
+void Game::game_last_actions(std::vector<Player> &players) {
+	for (int i = 0; i < players_number; i++) {
+		clear_terminal();
+		std::cout << "Game Ended" << std::endl;
+		std::cout << "Last Actions !" << std::endl << std::endl;
+		board.display_board();
+		std::cout << "Player " << players[i].get_name() << "'s turn :" << std::endl;
+		std::cout << "Player " << players[i].get_name() << " has " << players[i].get_exchange_number() << " exchange coupons" << std::endl;
+		if (players[i].get_exchange_number() <= 0) {
+			std::cout << "Player " << players[i].get_name() << " has no more exchange coupons !" << std::endl;
+			display_ending_turn();
+			continue;
+		} else {
+			while (players[i].get_exchange_number() > 0) {
+				std::cout << "Player " << players[i].get_name() << " can buy : " << players[i].get_exchange_number()<< " grass tile(s)" <<std::endl;
+                buy_grass_tile(players[i].get_char());
+				players[i].decrement_exchange_number();
+			}
+			std::cout << "Player " << players[i].get_name() << " has no more exchange coupons to buy grass tile(s) !" << std::endl;
+            display_ending_turn();
+            continue;
+		}
+	}
 }
 
 bool Game::make_action(int action) {
@@ -194,7 +237,7 @@ bool Game::make_action(int action) {
 		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
-
+		place_tile();
 		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
@@ -216,23 +259,12 @@ void Game::exchange_tile() {
 	int choice;
 
 	display_current_next_tiles_queued(tiles_queue);
-	while (true) {
-		std::cout << "Choose the tile you want to exchange with (1-5): ";
-    	std::cin >> choice;
-		if (choice >= 1 && choice <= 5) {
-			break;
-		} else {
-			std::cout << "Invalid input!" << std::endl;
-            std::cin.clear();
-            std::cin.ignore();
-		}
-	}
+	choice = input_int(1, 5, "Choose the tile you want to exchange with (1-5): ");
 	for (choice = choice; choice != 0; choice--) {
 		Tile temp_tile = tiles_queue.front();
 		tiles_queue.pop();
 		tiles_queue.push(temp_tile);
 	}
-	
 }
 
 
@@ -255,12 +287,13 @@ void Game::interpret_coords(char &x, char &y) {
 }
 
 void Game::ask_coords(char &user_x, char &user_y, std::string text) {
-	std::cout << "Please enter the coordinates of the square you'd like to place your "<< text <<" on.\nx : ";
-	std::cin >> user_y;
-	std::cout << "y : ";
-	std::cin >> user_x;
+	std::cout << std::endl << "Please enter the coordinates of the square you'd like to place your " << text << " on x (columns) and y (lines)" << std::endl;
+	input_string(user_x, "x : ");
+	input_string(user_y, "y : ");
 	interpret_coords(user_x, user_y);
 }
+
+
 
 void Game::place_stone() {
 	char user_x;
@@ -268,6 +301,14 @@ void Game::place_stone() {
 	do {
 		ask_coords(user_x, user_y, "stone");
 	} while (!board.place_stone(int(user_x), int(user_y)));
+}
+
+void Game::buy_grass_tile(char player) {
+	char user_x;
+	char user_y;
+	do {
+		ask_coords(user_x, user_y, "grass tile");
+	} while (!board.buy_grass_tile(int(user_x), int(user_y), player));
 }
 
 void Game::bases_placement() {

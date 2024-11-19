@@ -28,6 +28,7 @@ public:
 	bool place_stone(int x, int y);
 	bool check_neighborhood(int x, int y, char goal);
 	char bonus_check();
+	bool buy_grass_tile (int x, int y, char player);
 
 private:
 	std::vector<std::vector<char>> board;
