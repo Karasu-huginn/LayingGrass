@@ -40,6 +40,7 @@ public:
 	void input_string(char &user_pos, std::string text);
 	void display_ending_turn();
 	void clear_cin();
+	void check_bonus_playability(Player &player);
 private:
 	int tiles_number;
 	int players_number;

@@ -14,6 +14,8 @@ public:
 	void add_exchange();
 	void add_stone();
 	void add_rob();
+	int get_stone_number();
+	int get_rob_number();
 
 private:
 	char character;

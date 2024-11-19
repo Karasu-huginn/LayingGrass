@@ -157,9 +157,23 @@ void Game::display_ending_turn() {
 	Sleep(1000);
 }
 
+void Game::check_bonus_playability(Player &player) {
+	if (player.get_rob_number() > 0) {
+		rob_tile(player.get_char());
+	}
+	if (player.get_stone_number() > 0) {
+		std::cout << "Current tile : " << std::endl;
+		tiles_queue.front().display();
+		place_stone();
+	}
+	
+}
+
 void Game::game_loop() {
     int action_choice;
 	bool end_turn;
+	int winning_player_index = 0;
+	int winning_player_score = 0;
 
     while (player_turn > 0) { 
         for (int i = 0; i < players_number; i++) {
@@ -191,10 +205,16 @@ void Game::game_loop() {
                 }
 			}
 			display_ending_turn();
+			board.get_bonus(players[i]);
+			check_bonus_playability(players[i]);
             player_turn--;
         }
     }
 	game_last_actions(players);
+	board.check_victory(winning_player_score, winning_player_index);
+	clear_terminal();
+	board.display_board();
+	std::cout << "player :" << players[winning_player_index].get_name() << "won the game !!!" << std::endl;
     std::cout << "GG WP" << std::endl;
 }
 

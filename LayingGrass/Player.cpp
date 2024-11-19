@@ -41,6 +41,14 @@ void Player::add_stone() {
 	stone_number++;
 }
 
+int Player::get_stone_number() {
+	return stone_number;
+}
+
 void Player::add_rob() {
 	rob_number++;
+}
+
+int Player::get_rob_number() {
+	return rob_number;
 }
