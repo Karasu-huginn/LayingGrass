@@ -8,12 +8,6 @@ Game::Game(int pn) {
 	init_tiles_queue();
 	board = Board(pn);
 	player_turn = pn * 9;
-
-	// for (int i = 0; i < 96; i++) {
-	// 	Tile current_tile = tiles_queue.front();
-	// 	current_tile.display();
-	// 	tiles_queue.pop();
-	// }
 }
 
 Game::~Game() {
@@ -237,7 +231,7 @@ bool Game::make_action(int action) {
 		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
-		place_tile();
+		place_tile('a');
 		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;
@@ -288,8 +282,8 @@ void Game::interpret_coords(char &x, char &y) {
 
 void Game::ask_coords(char &user_x, char &user_y, std::string text) {
 	std::cout << std::endl << "Please enter the coordinates of the square you'd like to place your " << text << " on x (columns) and y (lines)" << std::endl;
-	input_string(user_x, "x : ");
-	input_string(user_y, "y : ");
+	input_string(user_y, "x : ");
+	input_string(user_x, "y : ");
 	interpret_coords(user_x, user_y);
 }
 
@@ -301,6 +295,9 @@ void Game::place_stone() {
 	do {
 		ask_coords(user_x, user_y, "stone");
 	} while (!board.place_stone(int(user_x), int(user_y)));
+	Tile temp_tile = tiles_queue.front();
+	tiles_queue.pop();
+	tiles_queue.push(temp_tile);
 }
 
 void Game::buy_grass_tile(char player) {

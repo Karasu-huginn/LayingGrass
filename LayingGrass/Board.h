@@ -27,8 +27,9 @@ public:
 	void rob_tile();
 	bool place_stone(int x, int y);
 	bool check_neighborhood(int x, int y, char goal);
-	char bonus_check();
+	bool check_full_neighborhood(int x, int y, char goal);
 	bool buy_grass_tile (int x, int y, char player);
+	void get_bonus(int& exchange, int& rob, int& stone, char player);
 
 private:
 	std::vector<std::vector<char>> board;

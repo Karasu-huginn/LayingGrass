@@ -15,4 +15,6 @@ private:
 	char character;
 	std::string name;
 	int exchange_number;
+	int rob_number;
+	int stone_number;
 };

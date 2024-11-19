@@ -264,25 +264,54 @@ bool Board::buy_grass_tile(int x, int y, char player) {
 bool Board::check_neighborhood(int x, int y, char goal) {
 	if (x + 1 < board_size and board[x + 1][y] == goal) {
 		return true;
-}
+	}
 	if (x - 1 >= 0 and board[x - 1][y] == goal) {
 		return true;
-}
+	}
 	if (y + 1 < board_size and board[x][y + 1] == goal) {
 		return true;
-}
+	}
 	if (y - 1 >= 0 and board[x][y - 1] == goal) {
 		return true;
 	}
 	// check north, south, east, west for char goal contact
 	return false;
 }
+bool Board::check_full_neighborhood(int x, int y, char goal) {
+	if (x + 1 < board_size and board[x + 1][y] != goal) {
+		return false;
+	}
+	if (x - 1 >= 0 and board[x - 1][y] != goal) {
+		return false;
+	}
+	if (y + 1 < board_size and board[x][y + 1] != goal) {
+		return false;
+	}
+	if (y - 1 >= 0 and board[x][y - 1] != goal) {
+		return false;
+	}
+	// check north, south, east, west for char goal full contact
+	return true;
+}
 
 
-
-
-char Board::bonus_check() {
-	return ' ';
+void Board::get_bonus(int &exchange, int &rob, int &stone, char player) {
+	for (int x = 0; x < board_size; x++){
+		for (int y = 0; y < board_size; y++){
+			if (board[x][y] == '1' and check_full_neighborhood(x, y, player)) {
+				exchange++;
+				board[x][y] = player;
+			}
+			if (board[x][y] == '2' and check_full_neighborhood(x, y, player)) {
+				stone++;
+				board[x][y] = player;
+			}
+			if (board[x][y] == '3' and check_full_neighborhood(x, y, player)) {
+				rob++;
+				board[x][y] = player;
+			}
+		}
+	}
 }
 
 
