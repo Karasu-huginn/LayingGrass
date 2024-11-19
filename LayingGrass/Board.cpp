@@ -242,14 +242,28 @@ void Board::rob_tile() {
 
 }
 
-bool Board::place_stone(int x, int y) {
-	if (board[x][y] == '0') {
-		board[x][y] = '$';
-		return true;
+bool Board::can_place_stone(Tile tile, int x, int y) {
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			if (tile.get_cell(i, j)) {
+				if (board[x + i][y + j] != '0') {
+					return false;
+				}
+			}
+		}
 	}
-	else {
+	return true;
+}
+
+bool Board::place_stone(Tile tile, int x, int y) {
+	if (x >= board_size - 5 or y >= board_size - 5) {
 		return false;
 	}
+	if (!can_place_stone(tile, x, y)) {
+		return false;
+	}
+	tile_apply(tile, x, y, '$');
+	return true;
 }
 
 bool Board::buy_grass_tile(int x, int y, char player) {

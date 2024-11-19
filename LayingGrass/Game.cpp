@@ -294,7 +294,7 @@ void Game::place_stone() {
 	char user_y;
 	do {
 		ask_coords(user_x, user_y, "stone");
-	} while (!board.place_stone(int(user_x), int(user_y)));
+	} while (!board.place_stone(tiles_queue.front(), int(user_x), int(user_y)));
 	Tile temp_tile = tiles_queue.front();
 	tiles_queue.pop();
 	tiles_queue.push(temp_tile);
