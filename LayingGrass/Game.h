@@ -31,7 +31,7 @@ public:
 	void place_base(char player);
 	void place_tile(char player);
 	void clear_terminal();
-	bool make_action(int action);
+	bool make_action(int action, char player);
 	void game_start();
 	void exchange_tile();
 	void game_last_actions(std::vector<Player> &players);

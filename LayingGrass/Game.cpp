@@ -199,7 +199,7 @@ void Game::game_loop() {
 						players[i].decrement_exchange_number();
 					}
 				}
-				end_turn = make_action(action_choice);
+				end_turn = make_action(action_choice, players[i].get_char());
 				if (end_turn) {
                     break;
                 }
@@ -244,14 +244,14 @@ void Game::game_last_actions(std::vector<Player> &players) {
 	}
 }
 
-bool Game::make_action(int action) {
+bool Game::make_action(int action, char player) {
 	if (action == 1) {
 		std::cout << "exchange tile" << std::endl;
 		exchange_tile();
 		return false;		
 	} else if (action == 2) {
 		std::cout << "place tile" << std::endl;
-		place_tile('a');
+		place_tile(player);
 		return true;
 	} else if (action == 3) {
 		std::cout << "rotate tile" << std::endl;

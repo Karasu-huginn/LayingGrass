@@ -332,38 +332,3 @@ void Board::get_bonus(Player &player) {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-/*bool Board::check_neighborhood(int ox, int oy, char goal) {
-	for (int nx = -1; nx < 2; nx++) {
-		for (int ny = -1; ny < 2; ny++) {
-			// unwanted cases skip
-			if (nx == 0 and ny == 0) {
-				continue;
-			}
-			if (ox + nx < 0) {
-				continue;
-			}
-			if (ox + nx >= board_size) {
-				continue;
-			}
-			if (oy + ny < 0) {
-				continue;
-			}
-			if (oy + ny >= board_size) {
-				continue;
-			}
-
-			// wanted cases check
-			if (board[ox + nx][oy + ny] == goal) {
-				return true;
-			}
-		}
-	}
-}*/
